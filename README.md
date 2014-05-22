@@ -1,4 +1,4 @@
 column-count
 ============
 
-implement column-count(css3) ordered not vertically, horizantally
+implement column-count(css3) ordered horizantally not vertically. 

@@ -1,0 +1,103 @@
+<!Doctype html>
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style>
+		@media screen and (min-width: 720px){
+		    #wrp{
+		        column-count:2;
+		        -moz-column-count:2;
+		        -webkit-column-count:2;
+		    }
+		}
+
+	</style>
+	<script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
+</head>
+<body>
+
+
+	<div id="wrp">
+		<div class="home 1">0</div>
+		<div class="home 2">1</div>
+		<div class="home 3">2</div>
+		<div class="home 4">3</div>
+		<div class="home 5">4</div>
+		<div class="home 6">5</div>
+		<div class="home 7">6</div>
+		<div class="home 8">7</div>
+		<div class="home 9">8</div>
+		<div class="home 10">9</div>
+	</div>
+
+
+	<script type="text/javascript">
+		(function () {
+			var 
+			wrp = $("#wrp");
+			child = wrp.find("div.home"),
+			len = $(".home").length,
+			frag = "", frag_origin = "",
+			currentWidth = 320, // default minimum-width
+			_activeWidth = 720;
+			
+
+			function columCountAction(activeWidth) {
+			    if(typeof activeWidth === "undefined")
+			        return false;
+
+			    currentWidth = $(document).width();
+
+				if(frag_origin == "")
+					frag_origin = manipulateDom();
+			    
+			    if(currentWidth >= activeWidth) { // check condition width
+			        if(frag == "")
+			        	frag += manipulateDom(1);
+			        wrp.html(frag);
+			        
+			    } else { // apply original DOM
+			        wrp.html(frag_origin);
+			    }
+			} // columCountAction function
+
+
+			function manipulateDom(check) {
+				var i = k =0,container = "";
+
+				if(typeof check === "undefined") {
+					for(; i < len;i++)
+		            	container += child[i].outerHTML; // OUTER를 지원하지 않는 경우는 어떻게 해야 할까??
+				} else {
+					for(; i < len;i++) {
+			            if(i%2 == 0) {
+			                container += child[i].outerHTML;
+			            }
+			        }
+			        for(; k < len;k++) {
+			            if(k%2 != 0) {
+			                container += child[k].outerHTML;
+			            }
+			        }
+				}
+		        return container;
+			}
+
+
+			if(window.attachEvent) {
+			    window.attachEvent('onresize', function() {
+			    	columCountAction(_activeWidth);
+			    });
+			} else if (window.addEventListener) {
+			    window.addEventListener('resize', function() {
+			    	columCountAction(_activeWidth);
+			    }, true);
+			} else {} //The browser does not support Javascript event binding
+
+			window.onload = columCountAction(_activeWidth);
+
+		}());
+	</script>
+</body>
+</html>
